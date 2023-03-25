@@ -86,8 +86,25 @@ export class UsersService {
         'User not found. Cannot create profile',
         HttpStatus.BAD_REQUEST,
       );
-    const newPost = this.postRepository.create({ ...createUserPostDto, user });
+    // Una forma de hacerlo
+    /* const newPost = this.postRepository.create({ ...createUserPostDto, user });
+    return this.postRepository.save(newPost); */
+
+    //segunda forma de hacerlo.
+    const newPost = this.postRepository.create();
+    newPost.description = createUserPostDto.description;
+    newPost.title = createUserPostDto.title;
+    newPost.user = user;
+    console.log('mi user service-2', newPost);
     return this.postRepository.save(newPost);
+
+    //tercera forma de hacerlo:
+    /*  const newPost = new Post();
+    newPost.description = createUserPostDto.description;
+    newPost.title = createUserPostDto.title;
+    newPost.user = user;
+    console.log('mi user service', newPost);
+    return this.postRepository.save(newPost); */
   }
 
   async createUserPosts(createUserPostsDto: CreateUserPostsDto): Promise<any> {
